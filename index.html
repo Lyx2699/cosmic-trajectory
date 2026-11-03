@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosmic trajectory · 深空影院 Deep space cinema V1.0 公开测试版</title>
+<meta name="description" content="Cosmic trajectory（宇宙轨迹）出品的深空影院 Deep space cinema V1.0 公开测试版：4D 弧形大屏、偏振光裸眼立体、4K 映射与 AI 超分、12 种 3D 映射、宇宙音轨 7.1.4、全平台链接解析，支持 Windows 与 Android 双端下载。">
+<meta property="og:title" content="Cosmic trajectory · 深空影院 Deep space cinema V1.0 公开测试版">
+<meta property="og:description" content="4D 弧形大屏 + 偏振光裸眼立体 + 宇宙音轨 7.1.4 的跨平台影院播放器，Windows 与 Android 双端公开下载。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23070812'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%2322d3ee' stroke-width='3'/%3E%3Ccircle cx='47' cy='18' r='4' fill='%238b5cf6'/%3E%3Cpath d='M32 14a18 18 0 0 1 15 8' fill='none' stroke='%2322d3ee' stroke-width='2.5' stroke-linecap='round' opacity='.7'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg0:#04060d; --bg1:#070b18; --bg2:#0a1022;
+  --line:#1d2a46; --line-soft:#16203a;
+  --ink:#e8eefc; --ink-2:#9fb0d8; --ink-3:#6b7ba6;
+  --accent:#22d3ee; --accent-2:#8b5cf6; --accent-3:#34d399;
+  --card:#0a1022; --card-2:#0c1428;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:radial-gradient(1200px 700px at 78% -8%,#0e1b3d 0%,transparent 55%),radial-gradient(900px 600px at -10% 28%,#101433 0%,transparent 50%),var(--bg0);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(34,211,238,.25)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+/* 背景星点画布（装饰层，不挡交互） */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+main,.topbar{position:relative;z-index:1}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(4,6,13,.78);border-bottom:1px solid var(--line-soft);backdrop-filter:blur(6px)}
+.topbar .wrap{display:flex;align-items:center;gap:28px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.02em}
+.brand svg{flex-shrink:0}
+.brand .sub{color:var(--ink-3);font-weight:500;font-size:12px}
+.nav{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--ink-2)}
+.nav a:hover{color:var(--accent)}
+@media(max-width:640px){.nav{gap:14px;font-size:13px}.nav .hide-sm{display:none}}
+
+/* ===== Hero ===== */
+.hero{padding:104px 0 72px;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--accent);border:1px solid rgba(34,211,238,.35);border-radius:999px;padding:6px 14px;margin-bottom:26px}
+.kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-3);box-shadow:0 0 8px var(--accent-3)}
+.hero h1{font-size:clamp(38px,7vw,72px);font-weight:800;letter-spacing:-.02em;line-height:1.08;text-wrap:balance}
+.hero h1 .grad{background:linear-gradient(100deg,#22d3ee 10%,#8b5cf6 70%,#34d399 110%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{max-width:620px;margin:22px auto 8px;color:var(--ink-2);font-size:clamp(15px,2.4vw,18px)}
+.hero .meta{color:var(--ink-3);font-size:13px;margin-bottom:34px}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:10px;font-size:15px;font-weight:600;border:1px solid var(--line);background:var(--card);transition:transform .12s,border-color .12s}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+.btn svg{width:17px;height:17px}
+.btn.primary{background:linear-gradient(100deg,#0e7490,#155e75);border-color:rgba(34,211,238,.5);color:#fff}
+.btn.primary:hover{border-color:var(--accent);box-shadow:0 6px 26px rgba(34,211,238,.18)}
+.btn.ghost{color:var(--ink-2)}
+.btn.ghost:hover{color:var(--accent)}
+.hero .note{font-size:12px;color:var(--ink-3);margin-top:18px}
+
+/* ===== 区块通用 ===== */
+section{padding:72px 0}
+.sec-head{max-width:640px;margin:0 auto 44px;text-align:center}
+.sec-head .tag{font-size:13px;color:var(--accent-2);letter-spacing:.1em;margin-bottom:10px}
+.sec-head h2{font-size:clamp(26px,4vw,38px);font-weight:750;letter-spacing:-.01em;text-wrap:balance}
+.sec-head p{color:var(--ink-2);font-size:15px;margin-top:12px}
+
+/* ===== 功能卡 ===== */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:980px){.feat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.feat-grid{grid-template-columns:1fr}}
+.feat{background:var(--card);border:1px solid var(--line-soft);border-radius:14px;padding:22px 20px;transition:border-color .15s}
+.feat:hover{border-color:rgba(34,211,238,.4)}
+.feat .ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(139,92,246,.12);margin-bottom:14px}
+.feat .ic svg{width:20px;height:20px}
+.feat h3{font-size:16px;font-weight:650;margin-bottom:8px}
+.feat p{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+
+/* 亮点横条 */
+.highlights{margin-top:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.highlights{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.highlights{grid-template-columns:1fr}}
+.hl{border:1px solid var(--line-soft);border-radius:12px;padding:16px 18px;background:var(--card-2)}
+.hl b{display:block;font-size:14px;margin-bottom:5px;color:var(--ink)}
+.hl span{font-size:12.5px;color:var(--ink-3)}
+
+/* ===== 下载区 ===== */
+.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:920px;margin:0 auto}
+@media(max-width:760px){.dl-grid{grid-template-columns:1fr}}
+.dl{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 22px;display:flex;flex-direction:column;gap:10px}
+.dl .os{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px}
+.dl .os svg{width:22px;height:22px}
+.dl .desc{font-size:13px;color:var(--ink-2)}
+.dl .size{font-size:12px;color:var(--ink-3)}
+.dl .ver{display:inline-block;font-size:11.5px;color:var(--accent);border:1px solid rgba(34,211,238,.3);border-radius:6px;padding:2px 8px;width:fit-content}
+.dl a{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 0;border-radius:9px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.4);font-size:14px;font-weight:600;color:var(--accent);transition:background .12s}
+.dl a:hover{background:rgba(34,211,238,.16)}
+.dl a svg{width:16px;height:16px}
+
+/* ===== 文档区 ===== */
+.doc{max-width:760px;margin:0 auto;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:26px 26px 22px;text-align:center}
+.doc .ic{width:44px;height:44px;border-radius:12px;background:rgba(34,211,238,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.doc .ic svg{width:22px;height:22px}
+.doc h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.doc p{color:var(--ink-2);font-size:14px;margin-bottom:16px}
+.doc a{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:9px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.45);color:var(--accent-2);font-weight:600;font-size:14px}
+.doc a:hover{background:rgba(139,92,246,.2)}
+.doc a svg{width:16px;height:16px}
+
+/* ===== 版本时间轴 ===== */
+.timeline{max-width:760px;margin:0 auto;display:grid;grid-template-columns:92px 1fr;gap:0;border-left:2px solid var(--line-soft);padding-left:26px}
+@media(max-width:560px){.timeline{grid-template-columns:72px 1fr;padding-left:18px}}
+.tl-item{display:contents}
+.tl-item .v{grid-column:1;padding:0 12px 26px 0;text-align:right;font-size:12.5px;color:var(--accent);font-weight:650;white-space:nowrap;line-height:1.5}
+.tl-item .d{grid-column:2;position:relative;padding:0 0 26px 22px;font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.tl-item .d::before{content:"";position:absolute;left:-33px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--bg0);border:2px solid var(--accent)}
+@media(max-width:560px){.tl-item .d::before{left:-25px}}
+.tl-item .d b{color:var(--ink);font-weight:650}
+.tl-item:last-child .d{padding-bottom:0}
+
+/* ===== 页脚 ===== */
+footer{border-top:1px solid var(--line-soft);padding:44px 0 54px;text-align:center;color:var(--ink-3);font-size:13px;line-height:2}
+footer .f-brand{font-size:14px;color:var(--ink-2);font-weight:600;margin-bottom:6px}
+footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 64 64" fill="none" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#070812"/><circle cx="32" cy="32" r="14" stroke="#22d3ee" stroke-width="3"/><circle cx="47" cy="18" r="4" fill="#8b5cf6"/><path d="M32 14a18 18 0 0 1 15 8" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round" opacity=".7"/></svg>
+      <span>Cosmic trajectory</span>
+      <span class="sub">深空影院</span>
+    </div>
+    <nav class="nav" aria-label="主导航">
+      <a href="#features">功能</a>
+      <a href="#download">下载</a>
+      <a href="#docs">文档</a>
+      <a href="#versions" class="hide-sm">版本</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker"><span class="dot"></span>V1.0 公开测试版 · v124.1</span>
+    <h1>Deep space cinema<br><span class="grad">深空影院 · 宇宙轨迹</span></h1>
+    <p class="lead">把每一段视频放进宇宙——4D 弧形大屏、偏振光裸眼立体、宇宙音轨 7.1.4，跨平台影院播放器。</p>
+    <p class="meta">Electron Windows · Android WebView · 双端同步发行</p>
+    <div class="cta">
+      <a class="btn primary" href="https://my.feishu.cn/file/DLH3bd4RRoWSczx71DwcAoJTnWg" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        下载 Windows 版
+      </a>
+      <a class="btn ghost" href="https://my.feishu.cn/file/JrskbTOJHoYc4kx4XlScL1Mpndh" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        下载 Android 版
+      </a>
+    </div>
+    <p class="note">公开测试版：功能持续迭代中，欢迎反馈实测问题</p>
+  </div>
+</header>
+
+<main>
+<section id="features" style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">FEATURES</div>
+      <h2>把影院搬进宇宙</h2>
+      <p>围绕 4D 影院原理与空间音频构建的渲染管线，双端统一体验。</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 0 1 18 0"/><path d="M5.5 15.5 3 18.5h18l-2.5-3"/><path d="M12 11v3"/></svg></div>
+        <h3>4D 弧形大屏</h3>
+        <p>三块弧段拼接包围观众视点（覆盖前方 120°–300°），配合影厅环境壳与一次性飞入，第一人称沉浸入厅。</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/></svg></div>
+        <h3>偏振光裸眼立体</h3>
+        <p>陀螺仪 / 鼠标驱动视差：前景快、背景反向慢，转动设备即可感受纵深层次，不戴眼镜也能体验的立体。</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M7 5v14M17 5v14M2 12h20"/></svg></div>
+        <h3>4K 映射与 AI 超分</h3>
+        <p>4K 映射 · 动态 HDR · 画质增强与 AI 超分流水线，配 FLC 超渲染与光线映射，画质上限拉满。</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div>
+        <h3>12 种 3D 映射</h3>
+        <p>球面全景 · 弧形曲面 · 圆柱环绕 · 波浪 · 折页 · 立方体 · 金字塔 · 圆环 · 螺旋 · 九宫格 · 柱面阵列 · 4D 弧形大屏。</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 3 6.5 6 6.5 10a6.5 6.5 0 0 1-13 0C5.5 9 8 6 12 3z"/><path d="M12 21v-3"/></svg></div>
+        <h3>宇宙音轨 7.1.4</h3>
+        <p>YZV 5 对象 HRTF 全景声 · 7.1.4 动态对象空间音频 · 宇宙空间声场扩宽，音画逐帧同步。</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div>
+        <h3>全平台链接解析</h3>
+        <p>B站 / 抖音 / 腾讯 / 优酷等主流平台链接一键解析播放，App 分享短链亦可，会员内容支持 Cookie 解锁。</p>
+      </div>
+    </div>
+    <div class="highlights">
+      <div class="hl"><b>360° 视角</b><span>拖拽 / 陀螺仪第一人称环视</span></div>
+      <div class="hl"><b>4D 动感</b><span>多轴运镜 · 10Hz 震动 · 节拍频闪</span></div>
+      <div class="hl"><b>FLC 超渲染</b><span>多层离屏合成 + 光线映射 + 锐化</span></div>
+      <div class="hl"><b>调试资源库</b><span>AI 助手 · 代码分区 · 源码调试</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="download" style="padding-top:36px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">DOWNLOAD</div>
+      <h2>公开测试版下载</h2>
+      <p>当前版本 v124.1 · 三件套（PC 安装包 · Android APK · 签名校验文件）</p>
+    </div>
+    <div class="dl-grid">
+      <div class="dl">
+        <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3h6M10 18h4"/></svg>Windows 版</div>
+        <div class="desc">深空影院桌面端 · Electron x64</div>
+        <div class="ver">v124.1</div>
+        <div class="size">zip 压缩包 · 约 253.8 MB · 解压即用</div>
+        <a href="https://my.feishu.cn/file/DLH3bd4RRoWSczx71DwcAoJTnWg" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>下载</a>
+      </div>
+      <div class="dl">
+        <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M10 18h4"/></svg>Android 版</div>
+        <div class="desc">深空影院移动端 · Android WebView</div>
+        <div class="ver">v124.1</div>
+        <div class="size">APK 安装包 · 约 13.1 MB · 直接安装</div>
+        <a href="https://my.feishu.cn/file/JrskbTOJHoYc4kx4XlScL1Mpndh" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>下载</a>
+      </div>
+      <div class="dl">
+        <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-1.5 6-4 6-8V7l-6-3-6 3v7c0 4 2 6.5 6 8z"/><path d="m9 12 2 2 4-4"/></svg>签名校验</div>
+        <div class="desc">APK 的 V4 签名文件（.idsig）</div>
+        <div class="ver">校验用</div>
+        <div class="size">约 108 KB · 与 APK 同目录安装校验</div>
+        <a href="https://my.feishu.cn/file/LCnxb1JrpoXvnXxUGi1csfaEnZf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>下载</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="docs" style="padding-top:36px">
+  <div class="wrap">
+    <div class="doc">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></div>
+      <h3>简介与使用说明文档</h3>
+      <p>安装方式、功能清单、4D / 偏振光 / 音轨设置、链接解析与调试库使用指南。</p>
+      <a href="https://my.feishu.cn/docx/KAmmdI5u0o1juHx7w08c7pmYn5d" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+        打开使用说明
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="versions" style="padding-top:48px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">VERSIONS</div>
+      <h2>版本演进</h2>
+      <p>从链接解析到偏振光立体，一路迭代至今。</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item"><div class="v">v110–v113</div><div class="d"><b>全平台链接解析</b>：B站 / 抖音 / 腾讯 / 优酷等链接一键解析播放。</div></div>
+      <div class="tl-item"><div class="v">v114–v115</div><div class="d"><b>三维入屏与 4D 镜像修复</b>：Three.js 弧面拼接方向修复，进入影厅飞入动画。</div></div>
+      <div class="tl-item"><div class="v">v116–v122</div><div class="d"><b>音视频升级</b>：7.1.4 sur714 动态对象空间音频、动态 HDR、4K 超分、自动档、画面增强。</div></div>
+      <div class="tl-item"><div class="v">v123</div><div class="d"><b>功能精简与启动修复</b>：删双音轨调音台 / PC 视频渲染 / 云电脑，修复两处启动红字、导入按钮恢复、4D 画布口径。</div></div>
+      <div class="tl-item"><div class="v">v123.1–123.7</div><div class="d"><b>修复链收尾</b>：红字守卫、4D 画布反转、移动端横屏输入法（穿透 / 闪退）焦点驱动修复。</div></div>
+      <div class="tl-item"><div class="v">v124</div><div class="d"><b>偏振光裸眼立体</b>：4D 模式跟随视角视差，不戴眼镜可感纵深；界面信息全面更新。</div></div>
+      <div class="tl-item"><div class="v">v124.1</div><div class="d"><b>命名与官网</b>：三维入屏更名 4D 弧形大屏，官网与使用说明上线，公开测试版发布。</div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-brand">Cosmic trajectory · 宇宙轨迹</div>
+    <div>Deep space cinema V1.0 公开测试版 · 双端：Electron Windows + Android WebView</div>
+    <div class="f-note">公开测试版仅供体验与反馈，功能与数据仍在迭代；发现异常欢迎反馈，我们按版本节奏持续修复。</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var canvas=document.getElementById('stars');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W,H,stars=[],N;
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+    N=Math.min(110,Math.floor(W*H/16000));
+    stars=[];
+    for(var i=0;i<N;i++){
+      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+0.3,s:reduce?0:(Math.random()*0.12+0.03),a:Math.random()*0.5+0.25,tw:Math.random()*6});
+    }
+  }
+  resize();
+  window.addEventListener('resize',resize);
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){
+      var st=stars[i];
+      if(!reduce){
+        st.y-=st.s;
+        if(st.y<-2){st.y=H+2;st.x=Math.random()*W;}
+      }
+      var a=st.a*(0.7+0.3*Math.sin(t/1000+st.tw));
+      ctx.beginPath();
+      ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(160,190,240,'+a.toFixed(3)+')';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  if(reduce){draw(0);}else{requestAnimationFrame(draw);}
+})();
+</script>
+</body>
+</html>
