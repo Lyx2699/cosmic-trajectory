@@ -228,7 +228,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
     <div class="sec-head">
       <div class="tag">DOWNLOAD</div>
       <h2>公开测试版下载</h2>
-      <p>当前版本 v124.31 · 三件套（PC 安装包 · Android APK · 签名校验文件）</p>
+      <p>Android v124.34 · PC v124.31 · 三件套（PC 安装包 · Android APK · 签名校验文件）</p>
     </div>
     <div class="dl-grid">
       <div class="dl">
@@ -243,20 +243,20 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <div class="dl">
         <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M10 18h4"/></svg>Android 版</div>
         <div class="desc">深空影院移动端 · Android WebView</div>
-        <div class="ver">v124.31</div>
-        <div class="size">APK 安装包 · 约 11.6 MB · 手机直接下载</div>
-        <a href="https://my.feishu.cn/file/ZBuMbzvyKoP8EJxiXB4cv1yFnNg" target="_blank" rel="noopener">
+        <div class="ver">v124.34</div>
+        <div class="size">APK 安装包 · 约 11.7 MB · 手机直接下载</div>
+        <a href="https://my.feishu.cn/file/Cd6CbqEgAoOF4nxD6OqceR5snEL" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>手机下载</a>
-        <a href="https://github.com/Lyx2699/cosmic-trajectory/releases/download/v1.5.8/DeepSpaceTheater-v124.31-Android.apk" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-size:12px;opacity:.75">GitHub 备用下载（国内网络可能较慢）</a>
+        <a href="https://github.com/Lyx2699/cosmic-trajectory/releases/download/v1.5.9/DeepSpaceTheater-v124.34-Android.apk" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-size:12px;opacity:.75">GitHub 备用下载（国内网络可能较慢）</a>
       </div>
       <div class="dl">
         <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-1.5 6-4 6-8V7l-6-3-6 3v7c0 4 2 6.5 6 8z"/><path d="m9 12 2 2 4-4"/></svg>签名校验</div>
         <div class="desc">APK 的 V4 签名文件（.idsig）</div>
         <div class="ver">校验用</div>
         <div class="size">约 100 KB · 与 APK 同目录安装校验</div>
-        <a href="https://my.feishu.cn/file/RXK4b10Foo0DlmxDaqxc4mSpnKZ" target="_blank" rel="noopener">
+        <a href="https://my.feishu.cn/file/BQ7Eb0QrvoKs1HxdHcpclAixnUf" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>下载</a>
-        <a href="https://github.com/Lyx2699/cosmic-trajectory/releases/download/v1.5.8/DeepSpaceTheater-v124.31-Android.apk.idsig" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-size:12px;opacity:.75">GitHub 备用下载（国内网络可能较慢）</a>
+        <a href="https://github.com/Lyx2699/cosmic-trajectory/releases/download/v1.5.9/DeepSpaceTheater-v124.34-Android.apk.idsig" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-size:12px;opacity:.75">GitHub 备用下载（国内网络可能较慢）</a>
       </div>
     </div>
   </div>
@@ -323,6 +323,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <p>从链接解析到偏振光立体，一路迭代至今。</p>
     </div>
     <div class="timeline">
+      <div class="tl-item"><div class="v">v124.34</div><div class="d"><b>手机端隐藏 B站登录</b>：按反馈移除手机端全部 B站登录入口（不再弹出应用内登录页、不再自建二维码、不再唤起哔哩哔哩 App），设置面板只保留「B站电影/番剧请前往 PC 端深空影院登录」的说明文字；解析失败与试看提示同步改为引导 PC 端登录后复制 Cookie 到手机版粘贴，手机端登录相关代码路径全部静默。</div></div>
       <div class="tl-item"><div class="v">v124.31</div><div class="d"><b>拦截 App 深链弹窗 + 抖音一次解析成功</b>：渲染提取窗口内抖音页面会跳转 snssdk1128:// 深链，Windows 会弹「获取打开此链接的应用」，Android 会跳外部 App；现统一只放行 http(s)，其余深链与世界窗口一律拦截。同时抖音解析改为原生接口自动重试 + 渲染提取失败自动二次尝试，消除「点两次才成功」。</div></div>
       <div class="tl-item"><div class="v">v124.30</div><div class="d"><b>修复主进程报错弹窗</b>：抖音/快手渲染提取用的隐藏窗口在解析完成销毁后，轮询定时器仍访问其 webContents，触发 “Object has been destroyed” 并弹出系统错误框（视频实际已正常播放）。现为轮询加上窗口存活守卫，并为整个主进程增加未捕获异常兜底，此类非致命异常只写日志不再弹窗。</div></div>
       <div class="tl-item"><div class="v">v124.29</div><div class="d"><b>抖音解析真正修复（Android）</b>：把本地代理改为手动逐跳跟随重定向，每一跳重新注入 Referer / UA / Range / Origin，解决 HttpURLConnection 自动跟随时丢失 Range 导致 douyinvod 403、播放器 code=4 的问题；新增原生 /dy-parse 解析接口（短链展开 → 页面抓取 → playwm 探测）。实测代理转发 playwm 已稳定返回 206 video/mp4。</div></div>
