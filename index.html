@@ -156,7 +156,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
 
 <header class="hero">
   <div class="wrap">
-    <span class="kicker"><span class="dot"></span>V1.0 公开测试版 · v125.1 AtmosV2</span>
+    <span class="kicker"><span class="dot"></span>V1.0 公开测试版 · v125.2 AtmosV2</span>
     <h1>Deep space cinema<br><span class="grad">深空影院 · 宇宙轨迹</span></h1>
     <p class="lead">把每一段视频放进宇宙——4D 弧形大屏、偏振光裸眼立体、宇宙音轨 7.1.4，跨平台影院播放器。</p>
     <p class="meta">Electron Windows · Android WebView · 双端同步发行</p>
@@ -228,13 +228,13 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
     <div class="sec-head">
       <div class="tag">DOWNLOAD</div>
       <h2>公开测试版下载</h2>
-      <p>当前版本 v125.1 AtmosV2 · 双端同步（PC 安装包 · Android APK）</p>
+      <p>当前版本 v125.2 AtmosV2 · 双端同步（PC 安装包 · Android APK）</p>
     </div>
     <div class="dl-grid">
       <div class="dl">
         <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3h6M10 18h4"/></svg>Windows 版</div>
         <div class="desc">深空影院桌面端 · Electron x64 · 宇宙全景声 V2</div>
-        <div class="ver">v125.1 AtmosV2</div>
+        <div class="ver">v125.2 AtmosV2</div>
         <div class="size">完整压缩包（zip）· 约 163 MB · 解压后双击 DeepSpaceTheater.exe 运行</div>
         <a href="https://my.feishu.cn/file/MJ4jbk0h5oJwY6xaNXCcaDfannf" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>下载</a>
@@ -243,7 +243,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <div class="dl">
         <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M10 18h4"/></svg>Android 版</div>
         <div class="desc">深空影院移动端 · Android WebView · 宇宙全景声 V2</div>
-        <div class="ver">v125.1 AtmosV2</div>
+        <div class="ver">v125.2 AtmosV2</div>
         <div class="size">APK 安装包 · 约 11.6 MB · 手机直接下载 · 同签名覆盖安装</div>
         <a href="https://my.feishu.cn/file/CKozbSJpuonULdxyNOdcvrUcnVg" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>手机下载</a>
@@ -322,7 +322,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <p>从链接解析到偏振光立体，一路迭代至今。</p>
     </div>
     <div class="timeline">
-      <div class="tl-item"><div class="v">v125.1 AtmosV2</div><div class="d"><b>杂音修复 + UI 文案更新</b>：母带直通后新增 -48dB 噪声门（8:1 / 1ms attack / 80ms release）压底噪；HP 从 28Hz 提到 40Hz 切超低频轰鸣；卷积混响 IR 早期散射峰去掉频率调制，消除伪音；bed 下混加 12kHz 低通去高频嘶声。UI 标识改为「🛰 宇宙全景声(7.1 动态对象空间音频)」。</div></div>
+      <div class="tl-item"><div class="v">v125.2 AtmosV2</div><div class="d"><b>杂音修复 + UI 文案更新</b>：母带直通后新增 -48dB 噪声门（8:1 / 1ms attack / 80ms release）压底噪；HP 从 28Hz 提到 40Hz 切超低频轰鸣；卷积混响 IR 早期散射峰去掉频率调制，消除伪音；bed 下混加 12kHz 低通去高频嘶声。UI 标识改为「🛰 宇宙全景声(7.1 动态对象空间音频)」。</div></div>
       <div class="tl-item"><div class="v">v125.0 AtmosV2</div><div class="d"><b>宇宙全景声 V2 引擎（母带级高动态）</b>：旁路旧链 -20dB/3:1 破坏性压缩与 +18dB makeup，信号母带直通仅过 28Hz 高通，保留原始动态；上混升级到 <b>16 bed（7.1 + 8 天空：TFL/TFR/TSL/TSR/TBL/TBR/TML/TMR）</b>；新增 <b>160 个 3D 音频对象池</b>（HRTF Panner，支持 setTrajectory 关键点实时插值飞行）、<b>5 个虚声环绕器</b>绕听者飞行示踪、<b>14 秒指数衰减宇宙卷积混响</b>（模拟真空无限外扩）；16 个 HRTF 虚拟音箱按影厅摆位下混到耳机/立体声；末端 <b>-1 dBTP 真峰值限幅</b>（knee 0 / 0.5ms attack）只防削波不压动态。双端同步。</div></div>
       <div class="tl-item"><div class="v">v124.31</div><div class="d"><b>拦截 App 深链弹窗 + 抖音一次解析成功</b>：渲染提取窗口内抖音页面会跳转 snssdk1128:// 深链，Windows 会弹「获取打开此链接的应用」，Android 会跳外部 App；现统一只放行 http(s)，其余深链与世界窗口一律拦截。同时抖音解析改为原生接口自动重试 + 渲染提取失败自动二次尝试，消除「点两次才成功」。</div></div>
       <div class="tl-item"><div class="v">v124.30</div><div class="d"><b>修复主进程报错弹窗</b>：抖音/快手渲染提取用的隐藏窗口在解析完成销毁后，轮询定时器仍访问其 webContents，触发 “Object has been destroyed” 并弹出系统错误框（视频实际已正常播放）。现为轮询加上窗口存活守卫，并为整个主进程增加未捕获异常兜底，此类非致命异常只写日志不再弹窗。</div></div>
