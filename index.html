@@ -114,7 +114,7 @@ section{padding:72px 0}
 .doc a svg{width:16px;height:16px}
 
 /* ===== 版本时间轴 ===== */
-.timeline{max-width:760px;margin:0 auto;display:grid;grid-template-columns:92px 1fr;gap:0;border-left:2px solid var(--line-soft);padding-left:26px}
+.timeline{max-width:820px;margin:0 auto;display:grid;grid-template-columns:118px 1fr;gap:0;border-left:2px solid var(--line-soft);padding-left:26px}
 @media(max-width:560px){.timeline{grid-template-columns:72px 1fr;padding-left:18px}}
 .tl-item{display:contents}
 .tl-item .v{grid-column:1;padding:0 12px 26px 0;text-align:right;font-size:12.5px;color:var(--accent);font-weight:650;white-space:nowrap;line-height:1.5}
@@ -324,7 +324,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <p>从链接解析到偏振光立体，一路迭代至今。</p>
     </div>
     <div class="timeline">
-      <div class="tl-item"><div class="v">v126.2 原生GPU增强</div><div class="d"><b>影院内原生 GPU 增强（自研着色器光追）</b>：底栏「⚡ 原生GPU」一键开启整帧后处理，面板含实时 / 1.35x 精修两档与四档强度。<b>光追 v5 走到路径追踪级采样</b>——每像素 8–16 条锥形抖动射线，按亮度平方做重要性采样，第一次反射落点再重采一次作为二次弹射，阴影不再死黑而是被邻近亮源染色（GI 观感）；抖动逐像素固定、不逐帧变化，所以不闪；实测暗场 +17%、亮场 +5%，白点占比 0。<b>超分与细节重建</b>：按屏幕比例分配像素预算（移动短边 1080 / PC 短边 2160，精修档 1.15× 超采样），与视口同比例所以不拉伸、视角不偏移；锐化为对称限幅 ±0.040 的受控非锐化，只在边缘发力。同步做的清理：<b>旧 CPU 光追/色彩超渲染/DLIC 三按钮下线</b>，<b>删除硬件渲染·软件渲染切换按钮与右上角模式文字</b>（统一走硬件渲染），HDR 关闭时画布强制不透明、底栏按钮改不透明深底（蓝框与透出星空的问题消失），后处理每 8 帧强制视频层不透明（副画面透出修复），退出沉浸不再弹导入框，RT 每帧双清屏（多帧叠影修复），帧率看门狗不再降分辨率导致发糊。<b>音频回退到 7.1.4 动态对象空间音频</b>（V2 全景声会旁路母带故停用）。<b>开发者调试资源库全量更新到 v126.2</b>：13 个模块、可就地展开读源码，AI 助手应用概况同步。双端同步发行。</div></div>
+      <div class="tl-item"><div class="v">v126.2</div><div class="d"><b>原生GPU增强 · 影院内自研着色器光追</b>：底栏「⚡ 原生GPU」一键开启整帧后处理，面板含实时 / 1.35x 精修两档与四档强度。<b>光追 v5 走到路径追踪级采样</b>——每像素 8–16 条锥形抖动射线，按亮度平方做重要性采样，第一次反射落点再重采一次作为二次弹射，阴影不再死黑而是被邻近亮源染色（GI 观感）；抖动逐像素固定、不逐帧变化，所以不闪；实测暗场 +17%、亮场 +5%，白点占比 0。<b>超分与细节重建</b>：按屏幕比例分配像素预算（移动短边 1080 / PC 短边 2160，精修档 1.15× 超采样），与视口同比例所以不拉伸、视角不偏移；锐化为对称限幅 ±0.040 的受控非锐化，只在边缘发力。同步做的清理：<b>旧 CPU 光追/色彩超渲染/DLIC 三按钮下线</b>，<b>删除硬件渲染·软件渲染切换按钮与右上角模式文字</b>（统一走硬件渲染），HDR 关闭时画布强制不透明、底栏按钮改不透明深底（蓝框与透出星空的问题消失），后处理每 8 帧强制视频层不透明（副画面透出修复），退出沉浸不再弹导入框，RT 每帧双清屏（多帧叠影修复），帧率看门狗不再降分辨率导致发糊。<b>音频回退到 7.1.4 动态对象空间音频</b>（V2 全景声会旁路母带故停用）。<b>开发者调试资源库全量更新到 v126.2</b>：13 个模块、可就地展开读源码，AI 助手应用概况同步。双端同步发行。</div></div>
       <div class="tl-item"><div class="v">v125.2 AtmosV2</div><div class="d"><b>手机滋滋声根治 + 沉浸弹窗修复</b>：删除噪声门（DynamicsCompressor 做 gate 在 Android WebView 会反复开合产生滋滋）；160 对象池改懒连接——未激活节点不连任何总线，零空跑底噪；末端限幅 attack 0.5ms→5ms 避免小信号数字滋滋；混响 IR 14s→6s（保留宇宙感但减少移动端实时卷积压力）；bed HRTF 虚拟音箱 16→8 主位置（8 天空声道折叠进主总线）。同时修复沉浸模式关闭时误弹导入框：开启沉浸前快照所有 UI 元素原始状态，关闭时按快照恢复。完整规格保留：16 bed + 160 对象池 + 5 虚声环绕器 + 真峰值限幅。</div></div>
       <div class="tl-item"><div class="v">v125.1 AtmosV2</div><div class="d"><b>杂音修复 + UI 文案更新</b>：母带直通后新增 -48dB 噪声门（8:1 / 1ms attack / 80ms release）压底噪；HP 从 28Hz 提到 40Hz 切超低频轰鸣；卷积混响 IR 早期散射峰去掉频率调制，消除伪音；bed 下混加 12kHz 低通去高频嘶声。UI 标识改为「🛰 宇宙全景声(7.1 动态对象空间音频)」。</div></div>
       <div class="tl-item"><div class="v">v125.0 AtmosV2</div><div class="d"><b>宇宙全景声 V2 引擎（母带级高动态）</b>：旁路旧链 -20dB/3:1 破坏性压缩与 +18dB makeup，信号母带直通仅过 28Hz 高通，保留原始动态；上混升级到 <b>16 bed（7.1 + 8 天空：TFL/TFR/TSL/TSR/TBL/TBR/TML/TMR）</b>；新增 <b>160 个 3D 音频对象池</b>（HRTF Panner，支持 setTrajectory 关键点实时插值飞行）、<b>5 个虚声环绕器</b>绕听者飞行示踪、<b>14 秒指数衰减宇宙卷积混响</b>（模拟真空无限外扩）；16 个 HRTF 虚拟音箱按影厅摆位下混到耳机/立体声；末端 <b>-1 dBTP 真峰值限幅</b>（knee 0 / 0.5ms attack）只防削波不压动态。双端同步。</div></div>
