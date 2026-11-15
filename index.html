@@ -156,7 +156,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
 
 <header class="hero">
   <div class="wrap">
-    <span class="kicker"><span class="dot"></span>V1.0 公开测试版 · v126.4.0</span>
+    <span class="kicker"><span class="dot"></span>V1.0 公开测试版 · v126.5.0</span>
     <h1>Deep space cinema<br><span class="grad">深空影院 · 宇宙轨迹</span></h1>
     <p class="lead">把每一段视频放进宇宙——4D 弧形大屏、偏振光裸眼立体、7.1.4 动态对象空间音频、原生 GPU，跨平台影院播放器。</p>
     <p class="meta">Electron Windows · Android WebView · 双端同步发行</p>
@@ -355,6 +355,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <div class="tl-item"><div class="v">v124.29</div><div class="d"><b>抖音解析真正修复（Android）</b>：把本地代理改为手动逐跳跟随重定向，每一跳重新注入 Referer / UA / Range / Origin，解决 HttpURLConnection 自动跟随时丢失 Range 导致 douyinvod 403、播放器 code=4 的问题；新增原生 /dy-parse 解析接口（短链展开 → 页面抓取 → playwm 探测）。实测代理转发 playwm 已稳定返回 206 video/mp4。</div></div>
       <div class="tl-item"><div class="v">v124.28</div><div class="d"><b>抖音解析彻底修复</b>：Android 端本地代理补齐 nofollow 302 解析能力（此前仅 PC 端支持），解析时直接把 playwm 302 预取为 douyinvod 最终直链，播放端不再依赖跨域 302 跟随，修复手机端抖音链接解析后 code=4 加载失败；主界面版本号同步 v124.28。</div></div>
 
+      <div class="tl-item"><div class="v">v126.5.0</div><div class="d"><b>一比一场景还原</b>：六张参考图按景深切成六层做真实摄像机投影，放入影院场景 1:1 呈现（落日湖畔 / 极光巨树 / 月夜海岛 / 樱花海湾 / 云海山城 / 光柱都市），海面波动、云层漂移、极光辉光、光柱脉动、上升粒子实时运行；画布以 0.5× 嵌入场景，面板可切初始+六景。</div></div>
       <div class="tl-item"><div class="v">v126.4.0</div><div class="d"><b>真三维六景</b>：六张参考图对应的场景改为真实 3D 建模（波浪水面、递归巨树、跨海桥、山城建筑群、峡谷方块、体积光柱、极光、粒子），画布缩至 0.5×嵌入场景，可 360° 观看；面板「初始场景 / 场景1–6」切换，全部实时动态。</div></div>
       <div class="tl-item"><div class="v">v124.27</div><div class="d"><b>界面版本号显示</b>：主界面标题恢复显示最新版本号（V1.0 公开测试版 · v124.28），与顶部提示、加载失败弹窗版本号统一；包含 v124.26 抖音短链解析修复（解析返回 douyinvod 最终直链，消除播放端 302 跨域失败）。</div></div>
       <div class="tl-item"><div class="v">v124.26</div><div class="d"><b>抖音短链解析修复</b>：修复抖音链接仍提示「提取加载不出来」——v124.24 的 playwm→douyinvod 直链转换仅加在页面内嵌数据分支，而实际抖音流程走隐藏渲染提取（分享页无内嵌 playwm，playwm 来自渲染页），转换未生效仍返回 302 水印流导致播放端跨域失败；v124.26 将原生 fetch 代理 nofollow 转换同时接入内嵌数据与渲染提取两条分支，端到端实测返回 douyinvod 最终直链、代理播放 206 video/mp4 正常。快手解析不受影响。</div></div>      <div class="tl-item"><div class="v">v124.25</div><div class="d"><b>番剧选集红字修复</b>：修复播放器点击「更换视频」报 <b>videoEpisodes is not defined</b> 红字（v124.23 选集状态误声明为加载函数局部变量，选集菜单/标题 UI 在全局访问导致报错），选集状态提升为全局后：点击「更换视频」无红字、「📚 选集列表」入口正常显示、弹层列出全部集数（实测《凹凸世界·新生》8 集标题+时长+当前集定位）。PC 与 Android 双端同步。</div></div>
