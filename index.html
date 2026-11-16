@@ -7,9 +7,9 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Cosmic trajectory · 深空影院 Deep space cinema v1.0 正式版</title>
-<meta name="description" content="Cosmic trajectory（宇宙轨迹）出品的深空影院 Deep space cinema v1.0 正式版：4D 弧形大屏、偏振光裸眼立体、原生 GPU 后处理与 RAS 神经渲染、12 种 3D 映射、7.1.4 动态对象空间音频、全平台链接解析，支持 Windows 与 Android 双端下载。">
+<meta name="description" content="Cosmic trajectory（宇宙轨迹）出品的深空影院 Deep space cinema v1.0 正式版 v126.11.8：4D 弧形大屏、偏振光裸眼立体、7.1.4 动态对象空间音频、原生 GPU，以及渲染期逐像素射线步进的光追采样 / 路追采样（全模式生效），双端同步发行。">
 <meta property="og:title" content="Cosmic trajectory · 深空影院 Deep space cinema v1.0 正式版">
-<meta property="og:description" content="4D 弧形大屏 + 偏振光裸眼立体 + 宇宙全景声（7.1 动态对象空间音频）的跨平台影院播放器，Windows 与 Android 双端公开下载。">
+<meta property="og:description" content="4D 弧形大屏 + 偏振光裸眼立体 + 宇宙全景声（7.1.4 动态对象空间音频）+ 材质内实时光追采样与路追采样，PC 与 Android 双端同步。">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23070812'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%2322d3ee' stroke-width='3'/%3E%3Ccircle cx='47' cy='18' r='4' fill='%238b5cf6'/%3E%3Cpath d='M32 14a18 18 0 0 1 15 8' fill='none' stroke='%2322d3ee' stroke-width='2.5' stroke-linecap='round' opacity='.7'/%3E%3C/svg%3E">
 <style>
@@ -156,16 +156,16 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
 
 <header class="hero">
   <div class="wrap">
-    <span class="kicker"><span class="dot"></span>v1.0 正式版 · v126.10.0</span>
+    <span class="kicker"><span class="dot"></span>v1.0 正式版 · v126.11.8</span>
     <h1>Deep space cinema<br><span class="grad">深空影院 · 宇宙轨迹</span></h1>
-    <p class="lead">把每一段视频放进宇宙——4D 弧形大屏、偏振光裸眼立体、7.1.4 动态对象空间音频、原生 GPU，跨平台影院播放器。</p>
+    <p class="lead">把每一段视频放进宇宙——4D 弧形大屏、偏振光裸眼立体、7.1.4 动态对象空间音频、原生 GPU，以及渲染期逐像素射线步进的实时光追采样与路追采样，跨平台影院播放器。</p>
     <p class="meta">Electron Windows · Android WebView · 双端同步发行</p>
     <div class="cta">
-      <a class="btn primary" href="https://aka.doubaocdn.com/s/wVk72EL7LX" target="_blank" rel="noopener">
+      <a class="btn primary" href="https://aka.doubaocdn.com/s/AuV4zWczLB" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
         下载 Windows 版
       </a>
-      <a class="btn ghost" href="https://aka.doubaocdn.com/s/41Mzso09e1" target="_blank" rel="noopener">
+      <a class="btn ghost" href="https://aka.doubaocdn.com/s/JxNfs7MP5B" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
         下载 Android 版
       </a>
@@ -196,7 +196,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <div class="feat">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M7 5v14M17 5v14M2 12h20"/></svg></div>
         <h3>原生 GPU</h3>
-        <p>影院内一键开启：屏幕空间光追、按屏幕比例的像素预算、边缘受控锐化与人眼一致的色彩重建。</p>
+        <p>影院内一键开启：光追采样（5 射线 × 7 步逐像素步进，亮部聚类为光源、暗部累积遮蔽）与路追采样（叠加二次散射与溢光扩散），结果直接写进巨幕材质着色器，不是后处理叠加。</p>
       </div>
       <div class="feat">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div>
@@ -228,15 +228,15 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
     <div class="sec-head">
       <div class="tag">DOWNLOAD</div>
       <h2>正式版下载</h2>
-      <p>正式版 v1.0 · v126.10.0 全形态链接解析 · HLS 巨幕链路 · 双端同步（PC 完整包 · Android APK）</p>
+      <p>正式版 v1.0 · v126.11.8 材质内实时光追采样 · 全模式生效 · 双端同步（PC 完整包 · Android APK）</p>
     </div>
     <div class="dl-grid">
       <div class="dl">
         <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3h6M10 18h4"/></svg>Windows 版</div>
         <div class="desc">深空影院桌面端 · Electron x64 · 原生GPU · RAS · 7.1.4</div>
-        <div class="ver">v126.10.0 全形态链接解析 · HLS 巨幕链路</div>
+        <div class="ver">v126.11.8 光追采样 / 路追采样 · 材质内射线步进</div>
         <div class="size">完整压缩包（zip）· 约 260 MB · 解压后双击 DeepSpaceTheater.exe 运行</div>
-        <a href="https://aka.doubaocdn.com/s/wVk72EL7LX" target="_blank" rel="noopener">
+        <a href="https://aka.doubaocdn.com/s/AuV4zWczLB" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>下载</a>
         <a href="https://github.com/Lyx2699/cosmic-trajectory/releases/download/v1.9.17/DeepSpaceTheater-Windows-v126.3.8.zip" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-size:12px;opacity:.75">GitHub 备用下载（国内网络可能较慢）</a>
         <a href="#versions" style="display:block;margin-top:8px;font-size:12px;opacity:.75">查看本版更新内容 ↓</a>
@@ -244,9 +244,9 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <div class="dl">
         <div class="os"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M10 18h4"/></svg>Android 版</div>
         <div class="desc">深空影院移动端 · Android WebView · 原生GPU · RAS · 7.1.4</div>
-        <div class="ver">v126.10.0 全形态链接解析 · HLS 巨幕链路</div>
-        <div class="size">APK 安装包 · 约 11.2 MB · 手机直接下载 · 同签名覆盖安装</div>
-        <a href="https://aka.doubaocdn.com/s/41Mzso09e1" target="_blank" rel="noopener">
+        <div class="ver">v126.11.8 光追采样 / 路追采样 · 材质内射线步进</div>
+        <div class="size">APK 安装包 · 约 11.3 MB · 手机直接下载 · 同签名覆盖安装</div>
+        <a href="https://aka.doubaocdn.com/s/JxNfs7MP5B" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>手机下载</a>
         <a href="https://github.com/Lyx2699/cosmic-trajectory/releases/download/v1.9.17/DeepSpaceTheater-Android-v126.3.8.apk" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-size:12px;opacity:.75">GitHub 备用下载（国内网络可能较慢）</a>
         <a href="#versions" style="display:block;margin-top:8px;font-size:12px;opacity:.75">查看本版更新内容 ↓</a>
@@ -324,6 +324,14 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <p>从链接解析到偏振光立体，一路迭代至今。</p>
     </div>
     <div class="timeline">
+      <div class="tl-item"><div class="v">v126.11.8</div><div class="d"><b>光追真正生效 + PC 明显增强</b>：查出移动端巨幕被 <b>FSR 自定义 ShaderMaterial</b> 替换，之前注入的 <b>#include &lt;map_fragment&gt;</b> 根本没落上；改为直接改写该着色器片元源码，在 <b>gl_FragColor</b> 前接入射线步进。PC 档辐照度抬能量 0.34→0.80、暗部遮蔽 0.30→0.48、溢光 0.55→1.10、饱和 1.26→1.38、对比 1.18→1.26，并输出 <b>[光追] 生效材质 N/M</b> 自检日志。</div></div>
+      <div class="tl-item"><div class="v">v126.11.7</div><div class="d"><b>修复「点了没反应」根因</b>：新增 <b>patchShaderMat()</b>，对任何采样 map 且含 vUv 的自定义 ShaderMaterial 注入同一套射线链路；FSR 材质创建即注入，主屏 / 3D 层 / 前景 mesh 全覆盖。</div></div>
+      <div class="tl-item"><div class="v">v126.11.6</div><div class="d"><b>去灰雾 + 真锐化</b>：视频纹理各向异性从 1 开到 4–16（弧面斜视不再糊成一片）；全局提亮 0.60→0.34 消除“提亮成雾”；锐化由 mip 差值改为 <b>4 邻域真锐化</b>。量化结果：同帧锐度 1.19→2.27，平均亮度仅 +6%。</div></div>
+      <div class="tl-item"><div class="v">v126.11.5</div><div class="d"><b>光追与路追互斥 + 不再强制关原生GPU</b>：模糊真凶是开光追时代码把「原生GPU」关掉，整帧回落低分辨率再放大；改为两者并存。两个采样开关任一时刻只能开一个。</div></div>
+      <div class="tl-item"><div class="v">v126.11.4</div><div class="d"><b>改名与按钮归属</b>：光线追踪 → <b>光追采样</b>，路追统一为 <b>路追采样</b>；两个按钮从底栏移进「⚡ 原生GPU」面板，底栏只留原生GPU入口。</div></div>
+      <div class="tl-item"><div class="v">v126.11.0</div><div class="d"><b>光影 / 色彩幅度拉起来</b>：光追强度 0.85→1.35、路追 1.15→2.10；暗部遮蔽只压到 0.72、亮部溢光系数翻倍，路追追加二次散射与饱和 / 对比增强；同步给出离线复算的三联对比图（原片 / 光追 / 路追）。</div></div>
+      <div class="tl-item"><div class="v">v126.10.7</div><div class="d"><b>光追从后处理搬进渲染期材质</b>：新增 <b>DSRT3D</b> 模块，把射线步进 GLSL 注入巨幕材质，逐像素重建法线、向亮部聚类光源发射射线；<b>tick()</b> 每帧收集主屏 / 4D 出屏层 / 3D 前景 / 3D 各层材质统一更新 uniform，旧离屏光追调用下线。</div></div>
+      <div class="tl-item"><div class="v">v126.10.5</div><div class="d"><b>真·光线步进 GPU 光追</b>：48×27 网格提取亮部光源元数据（最多 6 个），亮度重建法线，N 条重要性采样射线定步长行进，AO + 辐照度合成；PC 960 宽 / 移动 480 宽分档，WebGL2 不可用回退 CPU 管线。</div></div>
       <div class="tl-item"><div class="v">v126.3.8</div><div class="d"><b>换片黑屏彻底修掉（根因在换片链路，不只在超分）</b>：① 旧版在 <b>src 刚设置、新视频还没解码出帧</b> 时就 dispose 旧纹理并新建 VideoTexture，等于把屏幕清空 —— 这是"没画面"的主因；② 移动端另有一个 1200ms 延迟的二次建纹理块，会和第一次抢同一个网格，出现半截画面/定帧；③ 遇到 H.265/AV1/10bit 只给一片黑，没有任何提示。现在统一为<b>等 loadeddata 出帧后再原子切换纹理</b>（旧纹理保持到新纹理就绪，260ms 后再释放），删掉二次建纹理块，换片期间标题显示"加载中…"；编码不支持时明确提示"这个视频的编码无法播放（H.265/HEVC · AV1 · 10bit HDR），请导出 H.264 MP4"。另把移动端每帧 854×480 中转绘制改为仅在有 HDR/FSR 消费者时执行，减少主线程占用。实测连换 5 个片源（webm / 1080p H.264 / 4K / H.265 / 小尺寸）画面均值全部 99~107，无黑帧，H.265 正常弹出编码提示，0 报错。</div></div>
       <div class="tl-item"><div class="v">v126.3.7</div><div class="d"><b>换视频黑屏/卡顿修复</b>：换片瞬间超分仍在采样<b>已被释放</b>的旧 VideoTexture，同时主线程要现场重建 2560×1440 的 5 个 pass 缓冲，于是一黑一卡。现在换片时<b>立即释放超分、把网格纹理还原为原视频贴图、并自动取消超分勾选</b>（不做自动重建），等新视频就绪后再手动开启即可。判定改为纹理代数计数，杜绝同一贴图被误判成"换过"导致每帧重建抖动。实测：换片后画面均值 96~97 稳定不黑、最大帧间隔 207ms 无卡死、0 报错；换片后重开超分在新视频上正常重建。</div></div>
       <div class="tl-item"><div class="v">v126.3.6</div><div class="d"><b>神经超分真正跑通 + PC 过曝修复 + 抗过冲</b>：上一版 SR 的 5 个 pass 实际全部编译失败（运行时拼 <b>texOff</b> 宏少了一个右括号，gl 报 syntax error），表面上开关能点、画面却来自未更新的缓冲——等于没生效。现在修复括号、补上 sRGB→线性末级解码，PC 端过曝（亮度 52→115）随之消失；再加一层<b>源邻域范围钳制 + 30% 双线性混合</b>抑制 CNN 过冲白边。实测同帧：移动端 2752×1260 高频 3.567→3.623（+1.6%），PC 1920×1140 高频 2.006→2.731（+36%，因为 2560×1440 输出被下采样到更小屏幕），亮度差 ≤1.2%，20 秒连续运行 0 报错。开关仍默认关闭，关闭即还原原视频纹理。</div></div>
