@@ -268,7 +268,7 @@ footer .f-note{max-width:640px;margin:0 auto;font-size:12px}
       <p><b>实时：</b><code>GET /api/events?token=...</code> 为 SSE 长连接，事件包括 <code>hello</code> / <code>library</code> / <code>insert</code>；<code>POST /api/insert</code> 下发 <code>play / pause / seek / load / stop</code>。</p>
       <p><b>授权：</b><code>POST /api/license/verify</code> 校验签名与到期时间；<code>POST /api/session</code> 换取 8 小时会话 token。每个请求都带 token，不把 licenseKey 暴露在媒体 URL 之外。</p>
       <p><b>双端：</b>PC 与 Android 影院页右下角新增「🌐 影院服务」：连接、上传、媒体库、载入影院、远程插入；两端使用同一份 <code>ds_cinema_service.js</code>。</p>
-      <p><b>外部播放器：</b>「外部播放器 / 流媒体平台」支持 MP4、HLS(m3u8)、DASH 直链，经 <code>/api/proxy</code> 进入影院服务端；PC 可直接捕获 PotPlayer/VLC/浏览器窗口与系统音频，Android 使用原生 MediaProjection 捕获其他 App 画面（10fps）。DRM 流受平台限制，服务端不能解密。</p>
+      <p><b>外部播放器：</b>「外部播放器 / 流媒体平台」支持 MP4、HLS(m3u8)、DASH 直链，经 <code>/api/proxy</code> 进入影院服务端；PC 可直接捕获 PotPlayer/VLC/浏览器窗口与系统音频，Android 使用原生 MediaProjection 捕获其他 App 画面（10fps），并通过 AudioPlaybackCapture 尝试接入系统音频（受应用 opt-out 限制）。DRM 流受平台限制，服务端不能解密。</p>
     </div>
   </div>
 </section>
