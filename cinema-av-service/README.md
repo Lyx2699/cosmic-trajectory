@@ -29,8 +29,16 @@ node tools/make-license.js pro 365 studio-a
 - `PUT /api/upload?name=xxx.mp4&token=...` 原始二进制上传，支持 4 GB 以内
 - `GET /api/library?token=...`
 - `GET /api/stream/:file?token=...` 支持 HTTP Range，可被 `<video>` 直接拉流
+- `GET /api/proxy?url=...&token=...` 外部直链 / HLS(m3u8) 代理；HLS 播放列表与分片地址会重写回代理，影院端可直接拉流
 - `GET /api/events?token=...` SSE：`hello` / `library` / `insert`
 - `POST /api/insert?token=...` `{action:"play|pause|seek|load|stop",mediaId,time}`
+
+## 外部播放器 / 流媒体
+
+- **直链/HLS**：客户端「外部播放器 / 流媒体平台」粘贴 MP4、m3u8 或 DASH 直链，经 `/api/proxy` 进入影院服务端，再交给影院画布处理。
+- **本机播放器**：PC 端「捕获播放器窗口」用系统屏幕/窗口捕获 + 系统音频回环，直接把 PotPlayer/VLC/浏览器等画面送进影院引擎，FNAR/JOC 实时处理。
+- **Android**：原生 MediaProjection 屏幕捕获（`DsScreenCapture` 桥）把其他 App 画面按 10fps 送入影院画布；系统音频受 Android 平台限制，当前默认不强制内录。
+- **DRM**：Netflix/Disney+/腾讯/优酷等受 DRM 保护的流，服务端不能解密；只能依赖本机捕获，且部分平台会黑屏。
 
 ## 授权与购买
 

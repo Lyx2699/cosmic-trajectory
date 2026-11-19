@@ -5,6 +5,7 @@
  * 不依赖第三方 npm 包，方便开源部署。
  */
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -123,6 +124,53 @@ function serveStatic(req,res,url){
   res.writeHead(200, {'Content-Type': MEDIA_TYPES[ext] || (ext==='.html'?'text/html; charset=utf-8':'text/plain; charset=utf-8')});
   fs.createReadStream(file).pipe(res); return true;
 }
+
+function proxyTarget(target, req, res, token, depth){
+  if(depth>4) return json(res,502,{error:'too_many_redirects'});
+  let u; try{u=new URL(target);}catch(e){return json(res,400,{error:'bad_url'});}
+  if(!/^https?:$/.test(u.protocol)) return json(res,400,{error:'only_http_s_https'});
+  if(u.username||u.password) return json(res,400,{error:'credentials_not_allowed'});
+  const lib=u.protocol==='https:'?https:http;
+  const headers={'user-agent':req.headers['user-agent']||'Mozilla/5.0 DeepSpaceCinema/1.0','accept':'*/*'};
+  if(req.headers.range) headers.range=req.headers.range;
+  const ref=req.headers['x-proxy-referer']; if(ref) headers.referer=ref;
+  const opt={method:'GET',headers,timeout:25000};
+  const up=lib.request(u,opt,function(ur){
+    if([301,302,303,307,308].includes(ur.statusCode)&&ur.headers.location){
+      const next=new URL(ur.headers.location,u).toString(); ur.resume(); return proxyTarget(next,req,res,token,depth+1);
+    }
+    const ct=String(ur.headers['content-type']||'');
+    if(/mpegurl|m3u8/i.test(ct)||/\.m3u8$/i.test(u.pathname)){
+      let body=''; let n=0;
+      ur.on('data',d=>{n+=d.length; if(n>2*1024*1024){ur.destroy();} else body+=d.toString('utf8');});
+      ur.on('end',()=>{
+        if(n>2*1024*1024) return json(res,413,{error:'playlist_too_large'});
+        const lines=body.split(/\r?\n/).map(function(line){
+          if(!line||line[0]==='#') return line.replace(/URI="([^"]+)"/g,function(_,v){return 'URI="'+proxyHref(new URL(v,u).toString(),token)+'"';});
+          return proxyHref(new URL(line,u).toString(),token);
+        });
+        cors(res); res.writeHead(200,{'Content-Type':'application/vnd.apple.mpegurl','Cache-Control':'no-store'}); res.end(lines.join('\n'));
+      });
+      ur.on('error',()=>json(res,502,{error:'upstream_error'}));
+      return;
+    }
+    cors(res);
+    res.writeHead(ur.statusCode||200, {
+      'Content-Type': ct || 'application/octet-stream',
+      'Content-Length': ur.headers['content-length'] || '',
+      'Content-Range': ur.headers['content-range'] || '',
+      'Accept-Ranges': ur.headers['accept-ranges'] || 'bytes',
+      'Cache-Control': 'no-store'
+    });
+    ur.pipe(res);
+  });
+  up.on('timeout',()=>{up.destroy();json(res,504,{error:'upstream_timeout'});});
+  up.on('error',()=>json(res,502,{error:'upstream_unreachable'}));
+  up.end();
+}
+function proxyHref(target, token){
+  return '/api/proxy?url='+encodeURIComponent(target)+'&token='+encodeURIComponent(token);
+}
 const server = http.createServer(async (req,res)=>{
   const url = new URL(req.url, `http://${req.headers.host||'127.0.0.1'}`);
   if (req.method === 'OPTIONS') { cors(res); res.writeHead(204); return res.end(); }
@@ -175,6 +223,13 @@ const server = http.createServer(async (req,res)=>{
       });
       broadcast(s.sessionId,'library',{name,size:bytes,type:MEDIA_TYPES[ext]});
       return json(res,201,{ok:true,item:{id:name,name,size:bytes,type:MEDIA_TYPES[ext]}});
+    }
+
+    if (url.pathname === '/api/proxy' && req.method === 'GET') {
+      const s=authSession(req,url); if(!s) return json(res,401,{error:'invalid_session'});
+      const target=url.searchParams.get('url')||'';
+      if(!target) return json(res,400,{error:'url_required'});
+      return proxyTarget(target,req,res,s.token,0);
     }
 
     if (url.pathname.startsWith('/api/stream/') && req.method === 'GET') {
