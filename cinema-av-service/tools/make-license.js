@@ -1,0 +1,10 @@
+'use strict';
+const crypto=require('crypto');
+const SECRET=process.env.LICENSE_SECRET||'change-this-secret-before-production';
+const plan=process.argv[2]||'pro';
+const days=parseInt(process.argv[3]||'365',10);
+const sub=process.argv[4]||'deep-space-cinema';
+const exp=Math.floor(Date.now()/1000)+days*86400;
+const body=Buffer.from(JSON.stringify({plan,sub,exp,iat:Math.floor(Date.now()/1000)})).toString('base64url');
+const sig=crypto.createHmac('sha256',SECRET).update(body).digest('base64url');
+console.log(body+'.'+sig);

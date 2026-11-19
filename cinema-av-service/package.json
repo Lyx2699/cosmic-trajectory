@@ -1,0 +1,12 @@
+{
+  "name": "cinema-av-service",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Deep Space Cinema internal audio/video insertion service (open-source)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "license": "node tools/make-license.js"
+  },
+  "license": "MIT"
+}
